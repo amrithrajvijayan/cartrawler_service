@@ -1,14 +1,14 @@
 const { param } = require('../routes/car-router');
-const carService = require('../services/car-service');
 const carUtils = require('../utils/carUtils');
+const cache = require('../cache/car-service-cache');
 
 function loadCarsFromService(params) {
     return new Promise(async (resolve, reject) => {
-        let pr = carService.loadCars();
-        let output = await pr;
-        let carInfo = carUtils.processResponse(JSON.parse(output));
-        output = processOutput(carInfo, params);
-        resolve(output);
+        cache.loadCarsFromCache(params).then((output) => {
+            let carInfo = carUtils.processResponse(output);
+            output = processOutput(carInfo, params);
+            resolve(output);
+        });
     });
 }
 
