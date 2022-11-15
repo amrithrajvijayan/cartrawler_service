@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "lint" : "npx eslint src/api/v1/**"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -13,5 +14,12 @@
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
     "request": "^2.81.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.27.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.5.1",
+    "eslint-plugin-promise": "^6.1.1"
   }
 }
