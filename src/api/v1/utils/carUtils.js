@@ -1,6 +1,7 @@
 
 const Car = require('../models/Car')
 
+// Extract Car details from car api response (from car trawler api) and construct the return object for our api
 function extractCarsFromResponse (responseObject) {
   const carsList = []
   for (const responseObjectIndex in responseObject) {
@@ -27,7 +28,7 @@ function extractCarsFromResponse (responseObject) {
   return { result: carsList }
 }
 
-// Removes duplicate car names.
+// Removes duplicate car names from the response object.
 function removeDuplicates (responseObject) {
   const validationMap = new Map()
   const carsArray = []
@@ -42,6 +43,7 @@ function removeDuplicates (responseObject) {
   responseObject.result = carsArray
 }
 
+// Filter the response object by the code passed.
 function filterByCarCode (responseObject, filter) {
   const carsArray = []
 
@@ -49,7 +51,7 @@ function filterByCarCode (responseObject, filter) {
     for (const objKey in responseObject.result) {
       const carObject = responseObject.result[objKey]
 
-      if (carObject.carCode === filter) {
+      if (carObject.carCode === filter.toUpperCase()) {
         carsArray.push(carObject)
       }
     }
@@ -57,6 +59,7 @@ function filterByCarCode (responseObject, filter) {
   }
 }
 
+// The main sort function. checks the type of sorting asked by the parameter and filters the return object accordinly.
 function sort (responseObject, sortBy, sortDirection) {
   if (sortBy === 'corporate') {
     sortByCorporate(responseObject, sortDirection)
@@ -65,9 +68,10 @@ function sort (responseObject, sortBy, sortDirection) {
   }
 }
 
+// Sort the response based on corporate name.
 function sortByCorporate (responseObject, sortDirection) {
   responseObject.result.sort((a, b) => {
-    if (sortDirection === 'asc') {
+    if (sortDirection === undefined || sortDirection === 'asc') {
       if (a.supplier === b.supplier) {
         return (Number(a.rentalCost) - Number(b.rentalCost))
       } else { return a.supplier.localeCompare(b.supplier) }
@@ -79,12 +83,13 @@ function sortByCorporate (responseObject, sortDirection) {
   })
 }
 
+// Sort the response by price.
 function sortByPrice (responseObject, sortDirection) {
   responseObject.result.sort((a, b) => {
-    if (sortDirection === 'asc') { return (Number(a.rentalCost) - Number(b.rentalCost)) } else return (Number(b.rentalCost) - Number(a.rentalCost))
+    if (sortDirection === undefined || sortDirection === 'asc') { return (Number(a.rentalCost) - Number(b.rentalCost)) } else return (Number(b.rentalCost) - Number(a.rentalCost))
   })
 }
-
+// Filter out results such that only cheapest of each is shown.
 function filterCheapestOnly (responseObject) {
   const validationMap = new Map()
   const carsArray = []
