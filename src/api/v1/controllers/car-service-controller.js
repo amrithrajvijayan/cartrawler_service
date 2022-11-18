@@ -2,7 +2,7 @@ const carUtils = require('../utils/carUtils')
 const cache = require('../cache/car-service-cache')
 
 function loadCarsFromService (params) {
-  return new Promise(async (resolve, reject) => {
+  return new Promise((resolve, reject) => {
     cache.loadCarsFromCache(params).then((output) => {
       const carInfo = carUtils.extractCarsFromResponse(output)
       output = processOutput(carInfo, params)
