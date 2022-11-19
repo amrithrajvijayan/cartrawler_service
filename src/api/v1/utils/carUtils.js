@@ -100,7 +100,7 @@ function filterCheapestOnly (responseObject) {
     if (validationMap.has(mapKey)) {
       const existingObject = validationMap.get(mapKey)
 
-      if (existingObject.rentalCost > carObject.rentalCost) {
+      if (Number(existingObject.cost) > Number(carObject.rentalCost)) {
         carsArray[existingObject.position] = carObject
         validationMap.set(mapKey, { cost: carObject.rentalCost, position: existingObject.position })
       }

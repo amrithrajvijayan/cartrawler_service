@@ -57,3 +57,6 @@
         Eg: http://localhost:3000/api/v1/cars?filterByCode=CDAR
 
 Example with all parameters : http://localhost:3000/api/v1/cars?removeDup=false&cheapestOnly=true&sortBy=corporate&sortDir=desc&filterByCode=
+
+## Running Unit Tests
+    Use command 'npm run test' in order to start Jest Unit Tests.
